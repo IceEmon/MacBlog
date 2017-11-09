@@ -14,3 +14,23 @@ const server = {
     use: app.use.bind(app)
 };
 
+function listen(port) {
+    let server = http.Server(app)
+    webSocket.init(server)
+    return new Promise((resolve, reject) => {
+        server.listen(port, err => {
+            if (err) reject(err)
+            else resolve(port)
+        })
+    })
+}
+
+function getSockets() {
+    return webSocket.getSockets()
+}
+
+function router() {
+    return express.Router()
+}
+
+module.exports = server
