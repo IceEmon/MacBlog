@@ -33,4 +33,4 @@ function router() {
     return express.Router()
 }
 
-module.exports = server
+module.exports = server;

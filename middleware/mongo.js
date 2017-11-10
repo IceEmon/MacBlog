@@ -2,11 +2,13 @@
  * Created by Emonice on 2017/11/9.
  *
  */
-
+const mongoose = require('mongoose');
+const logger = require('./logger/log')
 let config = null;
 module.exports = {
     init,
-    getConnectionURL
+    getConnectionURL,
+    connect
 };
 
 function init(__config){
@@ -49,4 +51,9 @@ function getConnectionURL(){
         url += `?replicaSet=${conf.setName}`
     }
     return url
+}
+function connect() {
+    const url = getConnectionURL()
+    const options = config.mongodb.driverOptions || {}
+    return mongoose.connect(url, {server: options})
 }
