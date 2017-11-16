@@ -26,12 +26,12 @@ var pkg = require('../../package');
 var flash = require('connect-flash');
 let app = express();
 
-/*//#########################博客用到了#############################
+//#########################博客用到了#############################
 // 设置模板目录
-app.set('views', path.join(__dirname, 'public/views'));
+// app.set('views', path.join(__dirname, 'public/views'));
 // 设置模板引擎为 ejs
-app.set('view engine', 'ejs');
-//#########################博客用到了#############################*/
+// app.set('view engine', 'ejs');
+//#########################博客用到了#############################
 
 app.set('trust proxy', true);
 
