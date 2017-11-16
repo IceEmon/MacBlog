@@ -3,6 +3,7 @@
  */
 const _ = require('lodash');
 const Q = require('q');
+var path = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -20,7 +21,17 @@ const logger = config.logger;
 const cors = require('cors');//跨域
 const p3p = require('p3p');//通过设置P3P头来实现跨域访问COOKIE
 const UserAgent = require('./userAgent');
+//引入package.json
+var pkg = require('../../package');
+var flash = require('connect-flash');
 let app = express();
+
+/*//#########################博客用到了#############################
+// 设置模板目录
+app.set('views', path.join(__dirname, 'public/views'));
+// 设置模板引擎为 ejs
+app.set('view engine', 'ejs');
+//#########################博客用到了#############################*/
 
 app.set('trust proxy', true);
 
@@ -49,6 +60,29 @@ app.use(session({
     cookie: {maxAge: 3600000 * 24 * 7}, // 7 days
     store: sessionStore
 }));
+
+//#########################博客用到了#############################
+// flash 中间件，用来显示通知
+app.use(flash());
+// 处理表单及文件上传的中间件
+app.use(require('express-formidable')({
+    uploadDir: path.join(__dirname, 'public/img'),// 上传文件目录
+    keepExtensions: true// 保留后缀
+}));
+// 设置模板全局常量
+app.locals.blog = {
+    title: pkg.name
+    // description: pkg.description
+};
+// 添加模板必需的三个变量
+app.use(function (req, res, next) {
+    res.locals.user = req.session.user;
+    res.locals.success = req.flash('success').toString();
+    res.locals.error = req.flash('error').toString();
+    next();
+});
+//#########################博客用到了#############################
+
 app.use(helmet({hsts: false})); // 使用nginx来做，如果使用https，在nginx中做相应的配置
 app.disable('x-powered-by');
 app.disable('etag');

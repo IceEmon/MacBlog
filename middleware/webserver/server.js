@@ -10,6 +10,7 @@ const getSession = require('./getSession');
 const server = {
     router,
     listen,
+    getSockets,
     getSession,
     use: app.use.bind(app)
 };

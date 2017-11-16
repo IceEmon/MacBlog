@@ -8,5 +8,8 @@ const router = webServer.router();
 router.use('/v1', router);
 router.use('/v2', router);
 require('./touch')(router);
+require('./signin')(router);
+require('./signup')(router);
+require('./posts')(router);
 
 module.exports = router;
