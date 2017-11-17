@@ -13,12 +13,12 @@ let app = express();
 //#########################博客用到了#############################
 // 设置模板目录
 app.set('views', path.join(__dirname, 'public/views'));
-// // 设置模板引擎为 ejs
+// 设置模板引擎为 ejs
 app.set('view engine', 'ejs');
 //#########################博客用到了#############################
 
 app.get('/',function(req,res){
-    res.redirect('posts');
+    res.redirect('/posts');
 });
 server.use('/api', require('./api'));
 
