@@ -3,7 +3,7 @@
  */
 module.exports = log;
 
-const repo = require('../repo');
+const repo = require('../webserver/repo/repo');
 const LogSchema = require('./log.schema');
 
 function log(data) {

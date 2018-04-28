@@ -6,26 +6,32 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    name : {
-        index: true,
+    name: {
         type: String,
-        unique:true,
-        required: '{PATH} is required!'
+        required: true,
+        index: true,
     },
-    password: String,
-    avatar: String, //头像
+    password: {
+        type: String,
+        required: true
+    },
+    avatar: Object,
+    description: String,
     gender: {
         type: String,
         enum: ['m', 'f', 'x']
     },
-    bio: String //个人简介
+    createdAt: Date,
+    createdBy: ObjectId,
+    updatedAt: Date,
+    updatedBy: ObjectId
 });
 function allKeys() {
-    return _.without(_.keys(userSchema.paths), '__v');//'__v', //包含文档的内部修订,默认的是__v
+    return _.without(_.keys(userSchema.paths), '__v');
 }
 
 userSchema.statics.orderKey = function () {
-    return 'name';
+    return 'name -createdAt';
 };
 
 userSchema.methods.view = function () {

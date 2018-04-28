@@ -3,7 +3,7 @@
  * 评论
  */
 const CommentsSchema = require('./schema/comments.schema');
-const repo = require('../../../middleware/repo');
+const repo = require('../../../middleware/webserver/repo/repo');
 module.exports = {
     create,
     getComments,

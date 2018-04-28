@@ -3,7 +3,7 @@
  * 文章
  */
 const PostsSchema = require('./schema/posts.schema');
-const repo = require('../../../middleware/repo');
+const repo = require('../../../middleware/webserver/repo/repo');
 const Comments = require('../comments/comments.domain')
 module.exports = {
     create,
