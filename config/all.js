@@ -9,8 +9,8 @@ module.exports = {
         title: 'Blog',
         version: '1.0.0'
     },
-    publicPath: path.join(__dirname, '/../public/views'),
-    sessionSecret: 'macBlob',
+    publicPath: path.join(__dirname, '/../public/dist'),
+    sessionSecret: 'macBlog',
     aliveInterval: 1000 * 60 * 60,
     queryInterval: 1000 * 60 * 60
 };

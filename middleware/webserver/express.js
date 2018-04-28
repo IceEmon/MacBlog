@@ -24,15 +24,16 @@ const UserAgent = require('./userAgent');
 //引入package.json
 var pkg = require('../../package');
 var flash = require('connect-flash');
+const posts = require('../../src/router/posts');
 let app = express();
 
 //#########################博客用到了#############################
 // 设置模板目录
-// app.set('views', path.join(__dirname, 'public/views'));
+app.set('views', path.join(__dirname, 'public/views'));
 // 设置模板引擎为 ejs
-// app.set('view engine', 'ejs');
+app.set('view engine', 'ejs');
 //#########################博客用到了#############################
-
+// app.use('/',posts)
 app.set('trust proxy', true);
 
 //安装Gzip所需要用到的包"compression"

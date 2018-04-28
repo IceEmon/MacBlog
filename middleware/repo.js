@@ -24,6 +24,7 @@ module.exports = {
     aggregate,
     aggregateCountByField,
     cursor
+
 };
 
 function cursor(Model, query, projection = null) {

@@ -4,18 +4,18 @@
 const  _ = require('lodash');
 const mongo = require('../middleware/mongo');
 const config = require('../config/config');
-const weberver = require('../middleware/webserver/index');
+const webServer = require('../middleware/webserver/index');
 const logger = require('../middleware/logger/log');
 const notification = require('../middleware/notification/notification.service');
 
 module.exports = port=> {
     mongo.init(config);
-    weberver.init(_.extend({
+    webServer.init(_.extend({
         mongodbURL: mongo.getConnectionURL(),
         logger: logger
     }, config));
 
-    return weberver.server.listen(port)
+    return webServer.server.listen(port)
         .then(()=>{
             logger.info(`=> start MongoDB service, ${mongo.getConnectionURL()}`);
             return mongo.connect();
@@ -30,8 +30,8 @@ module.exports = port=> {
             // logger.info(`=> start alive service`);
             // Server.init();
             // logger.info(`=> require events`);
-            require('./events');
-            logger.info(`=> require routers`);
+            // require('./events');
+            // logger.info(`=> require routers`);
             require('./router');
             logger.info(`=> app start on port ${port} with ${process.env.NODE_ENV} environment`);
         })

@@ -13,7 +13,7 @@
 }*/
 module.exports = {
     port: process.env.PORT || 3001, //程序启动要监听的端口号
-    // baseName: 'http://180.168.170.198:3010',
+    //baseName: 'http://192.168.10.235:3010',
     mongodb: {
         host: 'localhost',
         port: 27017,
