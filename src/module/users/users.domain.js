@@ -9,7 +9,8 @@ module.exports = {
     getOneUser,
     getUserById,
     validateUser,
-    updateSession
+    updateUser,
+    deleteUserById
 }
 function create(data){
     if(!data.name || !data.password){
@@ -46,6 +47,15 @@ function getOneUser(data, projection){
 }
 function getUserById(id, projection) {
     return User.queryById(id, projection);
+}
+
+function updateUser(data, projection){
+    data.updatedAt = data.updatedAt || new Date();
+    return User.update(data, projection);
+}
+
+function deleteUserById(id){
+    return User.removeById(id);
 }
 
 function validateUser(name, password) {

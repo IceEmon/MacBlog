@@ -4,6 +4,7 @@
 const _ = require('lodash');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const makeRepo = require('../../../../middleware/repo/makeRepo')
 
 const userSchema = new Schema({
     name: {
@@ -38,4 +39,4 @@ userSchema.methods.view = function () {
     return _.pick(this, allKeys());
 };
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = makeRepo(mongoose.model('User', userSchema));

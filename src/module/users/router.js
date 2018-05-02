@@ -6,7 +6,7 @@ const requestIp = require('request-ip');
 const UserAgent = require('./userAgent');
 
 module.exports = router =>{
-    router.post('/user', addUser);
+    router.post('/register', addUser);
     router.post('/login', login);
     router.get('/logout', logout);
     router.get('/logged', logged);
@@ -63,7 +63,23 @@ function logout(req, res) {
 }
 
 function logged(req,res){
+    let {name, userId} = req.session;
+    let info = {
+        logged: false,
+        user: null
+    };
 
+    // _.isNil(xhr): 强制更新session
+    if (!name || !userId || _.isNil(xhr)) {
+        return new Promise(resolve => resolve(info));
+    }
+
+    return User.getUserById(userId)
+        .then(async user => {
+            info.logged = true;
+            info.user = user;
+            return info
+        });
 }
 
 function getUserById(req,res){
@@ -73,5 +89,27 @@ function getUserById(req,res){
         return;
     }
     return res.send_data(User.getUserById(userId))
+}
+
+function updateUser(res, req){
+    let id = req.params.id;
+    if(!id){
+        res.send_err('id is null');
+        return ;
+    }
+    let user = req.body;
+    if(!user){
+        res.send_err('body is null');
+    }
+    user.updatedBy = req.session.userId || user.userId;
+    return res.send_data(User.updateUser);
+}
+
+function deleteUser(req, res){
+    let id = req.params.id;
+    if(!id){
+        return res.send_err('id is null')
+    }
+    res.remove(User.deleteUserById(id))
 }
 

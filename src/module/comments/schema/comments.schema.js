@@ -6,9 +6,10 @@ const _ = require('lodash');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
+const makeRepo = require('../../../../middleware/repo/makeRepo')
 
 const commentsSchema = new Schema({
-    author: {
+    createdBy: {
         index: true,
         type: ObjectId,
         required: '{PATH} is required!'
@@ -17,10 +18,13 @@ const commentsSchema = new Schema({
     postId: { index: true,
         type: ObjectId,
         required: '{PATH} is required!'
-    }
+    },
+    createdAt: Date,
+    updatedAt: Date,
+    updatedBy: ObjectId
 });
 function allKeys() {
-    return _.without(_.keys(commentsSchema.paths), '__v');//'__v', //包含文档的内部修订,默认的是__v
+    return _.without(_.keys(commentsSchema.paths), '__v');
 }
 
 commentsSchema.statics.orderKey = function () {
@@ -31,4 +35,4 @@ commentsSchema.methods.view = function () {
     return _.pick(this, allKeys());
 };
 
-module.exports = mongoose.model('Comments', commentsSchema);
+module.exports = makeRepo(mongoose.model('Comments', commentsSchema));
